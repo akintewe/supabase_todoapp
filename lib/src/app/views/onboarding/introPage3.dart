@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:todoapp/src/app/views/onboarding/welcomeScreen.dart';
 
 class IntroPage3 extends StatefulWidget {
   final PageController controller;
@@ -18,9 +18,7 @@ class _IntroPage3State extends State<IntroPage3> {
         fit: StackFit.expand,
         children: [
           Positioned(
-              top: 114,
-              right: 50,
-              child: Image.asset('assets/images/ob3.png')),
+              top: 114, right: 70, child: Image.asset('assets/images/ob3.png')),
           Positioned(
             bottom: 0,
             child: SizedBox(
@@ -35,7 +33,7 @@ class _IntroPage3State extends State<IntroPage3> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Food',
+                        'Organize your tasks',
                         style: TextStyle(color: Colors.white, fontSize: 28),
                       ),
                     ),
@@ -46,7 +44,7 @@ class _IntroPage3State extends State<IntroPage3> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Satisfy cravings and discover\nnew flavors with our diverse\nfood selection, available for',
+                          'You can organize your daily tasks by ',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -56,7 +54,7 @@ class _IntroPage3State extends State<IntroPage3> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'delivery to your door.',
+                        'adding your tasks into separate categories..',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -71,12 +69,16 @@ class _IntroPage3State extends State<IntroPage3> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
-                            onTap: (){
-                            
+                            onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WelcomeScreen()));
                             },
                             child: Text(
                               'Skip',
-                              style: TextStyle(color: Colors.white, fontSize: 15),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
                             ),
                           ),
                           SizedBox(
@@ -87,7 +89,8 @@ class _IntroPage3State extends State<IntroPage3> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
                                   ),
-                                  backgroundColor:  Color.fromRGBO(136, 117, 255, 1),
+                                  backgroundColor:
+                                      Color.fromRGBO(136, 117, 255, 1),
                                 ),
                                 onPressed: () {
                                   widget.controller.nextPage(
@@ -99,8 +102,7 @@ class _IntroPage3State extends State<IntroPage3> {
                                   child: Text(
                                     'Next',
                                     style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15),
+                                        color: Colors.white, fontSize: 15),
                                   ),
                                 )),
                           ),

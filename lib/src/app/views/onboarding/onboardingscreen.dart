@@ -55,8 +55,8 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 ),
               ),
               Positioned(
-                bottom: 110,
-                left: 170,
+                bottom: 80,
+                left: 155,
                 child: SmoothPageIndicator(
                     controller: controller,
                     count: 4,

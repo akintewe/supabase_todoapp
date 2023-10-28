@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025365503662",
+    "project_id": "storetodo-e1295",
+    "storage_bucket": "storetodo-e1295.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025365503662:android:aee98f92c257f1fe21073f",
+        "android_client_info": {
+          "package_name": "com.example.todoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe2vcYQ7hwuhcMwCXKW3UGdgig8gsN8Yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

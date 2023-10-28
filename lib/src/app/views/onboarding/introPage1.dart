@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/src/app/views/onboarding/welcomeScreen.dart';
 
 class IntroPage1 extends StatefulWidget {
   final PageController controller;
@@ -32,8 +33,8 @@ class _IntroPage1State extends State<IntroPage1> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Grocery',
-                        style: TextStyle(color: Colors.white, fontSize: 28),
+                        'Manage your tasks',
+                        style: TextStyle(color: Colors.white, fontSize: 32),
                       ),
                     ),
                     const SizedBox(
@@ -43,7 +44,7 @@ class _IntroPage1State extends State<IntroPage1> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Effortlessly shop for all your\ngrocery needs with our user-\nfriendly app. Everything you',
+                          'You can easily manage all of your daily',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -53,7 +54,7 @@ class _IntroPage1State extends State<IntroPage1> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'need in one place.',
+                        'tasks in StoreTodo for free....',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -68,7 +69,12 @@ class _IntroPage1State extends State<IntroPage1> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WelcomeScreen()));
+                            },
                             child: Text(
                               'Skip',
                               style:

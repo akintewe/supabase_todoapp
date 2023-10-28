@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/src/app/views/onboarding/welcomeScreen.dart';
 
 class Intro4 extends StatefulWidget {
   const Intro4({super.key});
@@ -16,7 +17,7 @@ class _Intro4State extends State<Intro4> {
         fit: StackFit.expand,
         children: [
           Positioned(
-              top: 114, right: 50, child: Image.asset('assets/images/ob3.png')),
+              top: 114, right: 70, child: Image.asset('assets/images/ob3.png')),
           Positioned(
             bottom: 0,
             child: SizedBox(
@@ -31,7 +32,7 @@ class _Intro4State extends State<Intro4> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'On Demand',
+                        'Get Started',
                         style: TextStyle(color: Colors.white, fontSize: 28),
                       ),
                     ),
@@ -42,7 +43,7 @@ class _Intro4State extends State<Intro4> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Get your packages delivered\non-demand with our fast and\nreliable courier service, now',
+                          'Lets get started and start making your life',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -52,14 +53,14 @@ class _Intro4State extends State<Intro4> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'available at your fingertips.',
+                        'easier for you ......',
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 30,
                     ),
                     SizedBox(
                       width: 139,
@@ -71,7 +72,12 @@ class _Intro4State extends State<Intro4> {
                             ),
                             backgroundColor: Color.fromRGBO(136, 117, 255, 1),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WelcomeScreen()));
+                          },
                           child: Center(
                             child: Text(
                               'Get Started',
