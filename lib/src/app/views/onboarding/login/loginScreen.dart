@@ -19,7 +19,25 @@ class _LoginScreenState extends State<LoginScreen> {
   final UserNameAuthService _userNameauthService = UserNameAuthService();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  bool _isButtonEnabled = false;
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController.addListener(_checkButton);
+    _passwordController.addListener(_checkButton);
+  }
+
+  void _checkButton() {
+    final email = _usernameController.text;
+    final password = _passwordController.text;
+
+    setState(() {
+      _isButtonEnabled = email.isNotEmpty && password.isNotEmpty;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,9 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 350,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: _isLoading
-                      ? null
-                      : () async {
+                  onPressed: _isButtonEnabled
+                      ? () async {
                           setState(() {
                             _isLoading = true;
                           });
@@ -137,14 +154,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             _isLoading = false;
                           });
                           // Do something when the button is clicked
-                        },
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      primary: const Color.fromRGBO(136, 117, 255, 1)
-                      // Set the button's background color
-                      ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    primary: _isButtonEnabled
+                        ? const Color.fromRGBO(136, 117, 255, 1)
+                        : Color.fromARGB(255, 159, 158, 158),
+                    // Set the button's background color
+                  ),
                   child: _isLoading
                       ? CircularProgressIndicator(
                           color: Colors.white,
