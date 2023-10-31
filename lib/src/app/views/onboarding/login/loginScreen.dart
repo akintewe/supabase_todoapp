@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final UserNameAuthService _userNameauthService = UserNameAuthService();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,47 +89,55 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 350,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    String email = _usernameController.text
-                        .trim(); // Assuming email is used as username
-                    String password = _passwordController.text.trim();
+                  onPressed: _isLoading
+                      ? null
+                      : () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          String email = _usernameController.text
+                              .trim(); // Assuming email is used as username
+                          String password = _passwordController.text.trim();
 
-                    // Attempt to sign in the user
-                    User? user = await _userNameauthService
-                        .signInWithEmailAndPassword(email, password);
+                          // Attempt to sign in the user
+                          User? user = await _userNameauthService
+                              .signInWithEmailAndPassword(email, password);
 
-                    if (user != null) {
-                      // Login successful, navigate to the next screen or perform necessary actions
-                      print('User logged in successfully: ${user.email}');
-                      // Navigate to the next screen or perform actions here
-                    } else {
-                      // Login failed, show an error message or handle it as needed
-                      print('Login failed');
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            title: Text(
-                              'Login Failed',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            content: Text(
-                                'Invalid username or password. Please try again or register an account.'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
+                          if (user != null) {
+                            // Login successful, navigate to the next screen or perform necessary actions
+                            print('User logged in successfully: ${user.email}');
+                            // Navigate to the next screen or perform actions here
+                          } else {
+                            // Login failed, show an error message or handle it as needed
+                            print('Login failed');
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  title: Text(
+                                    'Login Failed',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  content: Text(
+                                      'Invalid username or password. Please try again or register an account.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          // Do something when the button is clicked
                         },
-                      );
-                    }
-                    // Do something when the button is clicked
-                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -137,10 +145,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       primary: const Color.fromRGBO(136, 117, 255, 1)
                       // Set the button's background color
                       ),
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                 ),
               ),
             ),
