@@ -3,23 +3,24 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/src/app/services/googleAuthService.dart';
 import 'package:todoapp/src/app/services/usernameAuthService.dart';
-import 'package:todoapp/src/app/views/onboarding/register/registerScreen.dart';
+import 'package:todoapp/src/app/views/onboarding/login/loginScreen.dart';
 import 'package:todoapp/src/app/widgets/regTitle.dart';
 import 'package:todoapp/src/app/widgets/textfieldwidget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final AuthService _authService = AuthService();
   final UserNameAuthService _userNameauthService = UserNameAuthService();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
+  TextEditingController _confirmPasswordController = TextEditingController();
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             const Padding(
               padding: EdgeInsets.only(left: 10.0, top: 10, bottom: 2),
@@ -80,6 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
               obscure: true,
               controller: _passwordController,
             ),
+            const RegTitle(title: 'Confirm Password'),
+            TextFieldWidget(
+              hint: '. . . . . . . .',
+              obscure: true,
+              controller: _confirmPasswordController,
+            ),
             const SizedBox(
               height: 30,
             ),
@@ -89,58 +96,62 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 350,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    String email = _usernameController.text
-                        .trim(); // Assuming email is used as username
-                    String password = _passwordController.text.trim();
+                  onPressed: _isLoading
+                      ? null
+                      : () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
 
-                    // Attempt to sign in the user
-                    User? user = await _userNameauthService
-                        .signInWithEmailAndPassword(email, password);
+                          String email = _usernameController.text.trim();
+                          String password = _passwordController.text.trim();
+                          String confirmPassword =
+                              _confirmPasswordController.text.trim();
 
-                    if (user != null) {
-                      // Login successful, navigate to the next screen or perform necessary actions
-                      print('User logged in successfully: ${user.email}');
-                      // Navigate to the next screen or perform actions here
-                    } else {
-                      // Login failed, show an error message or handle it as needed
-                      print('Login failed');
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            title: Text(
-                              'Login Failed',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            content: Text(
-                                'Invalid username or password. Please try again or register an account.'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
+                          if (password == confirmPassword) {
+                            User? user = await _userNameauthService
+                                .registerWithEmailAndPassword(email, password);
+
+                            if (user != null) {
+                              // Registration successful, navigate to the next screen or perform necessary actions
+                              print(
+                                  'User registered successfully: ${user.email}');
+                              // Navigate to the next screen or perform actions here
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Email is badly formatted or email has been registered')),
+                              );
+                              // Registration failed, handle it appropriately
+                              print('Registration failed');
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Passwords do not match')),
+                            );
+                            // Passwords do not match, show an error message or handle it as needed
+                            print('Passwords do not match');
+                          }
+
+                          setState(() {
+                            _isLoading = false;
+                          });
                         },
-                      );
-                    }
-                    // Do something when the button is clicked
-                  },
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      primary: const Color.fromRGBO(136, 117, 255, 1)
-                      // Set the button's background color
-                      ),
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    primary: const Color.fromRGBO(136, 117, 255, 1),
                   ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Text(
+                          'Register',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                 ),
               ),
             ),
@@ -167,6 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         // Google sign-in successful, navigate to the next screen or perform necessary actions
                         print(
                             'User signed in with Google: ${user.displayName}');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
                         // Navigate to the next screen or perform actions here
                       } else {
                         // Google sign-in failed or user cancelled, handle it appropriately
@@ -190,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 5,
                         ),
                         const Text(
-                          'Login with Google',
+                          'Register with Google',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ],
@@ -204,14 +219,14 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.center,
               child: RichText(
                 text: TextSpan(
-                  text: 'Don\'t have an account? ',
+                  text: 'Already have an account? ',
                   style: TextStyle(
                     color: Color.fromRGBO(151, 151, 151, 1),
                     fontSize: 16,
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'Register',
+                      text: 'Login',
                       style: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 0.87),
                         fontSize: 16,
@@ -222,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
+                                  builder: (context) => LoginScreen()));
                         },
                     ),
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/src/app/views/onboarding/login/loginScreen.dart';
+import 'package:todoapp/src/app/views/onboarding/register/registerScreen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -98,7 +99,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               width: 300,
               height: 50,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()));
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
