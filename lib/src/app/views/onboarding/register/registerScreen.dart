@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Login',
+                  'Register',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -116,6 +116,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               // Registration successful, navigate to the next screen or perform necessary actions
                               print(
                                   'User registered successfully: ${user.email}');
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
                               // Navigate to the next screen or perform actions here
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

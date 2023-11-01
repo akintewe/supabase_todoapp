@@ -5,7 +5,11 @@ class TextFieldWidget extends StatefulWidget {
   final String hint;
   final bool obscure;
   final TextEditingController controller;
-  const TextFieldWidget({super.key, required this.hint, required this.obscure, required this.controller});
+  const TextFieldWidget(
+      {super.key,
+      required this.hint,
+      required this.obscure,
+      required this.controller});
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -35,7 +39,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           fillColor: Colors.black,
         ),
         inputFormatters: [
-          LengthLimitingTextInputFormatter(20),
+          LengthLimitingTextInputFormatter(50),
         ],
       ),
     );

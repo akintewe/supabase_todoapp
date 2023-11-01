@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/src/app/services/googleAuthService.dart';
 import 'package:todoapp/src/app/services/usernameAuthService.dart';
+import 'package:todoapp/src/app/views/homeScreen/todoScreen.dart';
 import 'package:todoapp/src/app/views/onboarding/register/registerScreen.dart';
 import 'package:todoapp/src/app/widgets/regTitle.dart';
 import 'package:todoapp/src/app/widgets/textfieldwidget.dart';
@@ -123,6 +124,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (user != null) {
                             // Login successful, navigate to the next screen or perform necessary actions
                             print('User logged in successfully: ${user.email}');
+                          
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TodoScreen(
+                                          userId: user.uid,
+                                        )));
                             // Navigate to the next screen or perform actions here
                           } else {
                             // Login failed, show an error message or handle it as needed
