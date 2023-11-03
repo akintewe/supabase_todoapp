@@ -38,7 +38,6 @@ class _TodoScreenState extends State<TodoScreen> {
           ),
         ),
       ),
-    
       body: StreamBuilder<List<Todo>>(
         stream: _todoDatabaseHelper.todosStream,
         builder: (context, snapshot) {
@@ -72,8 +71,8 @@ class _TodoScreenState extends State<TodoScreen> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromRGBO(130, 5, 255, 1),
-                          Color.fromRGBO(207, 161, 254, 1)
+                          Color.fromRGBO(44, 1, 86, 1),
+                          Color.fromRGBO(68, 51, 85, 1)
                         ], // Specify your gradient colors here
                         begin: Alignment
                             .centerLeft, // Specify the alignment of the gradient
