@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/src/app/services/googleAuthService.dart';
 import 'package:todoapp/src/app/services/usernameAuthService.dart';
+import 'package:todoapp/src/app/views/homeScreen/homeScreen.dart';
 import 'package:todoapp/src/app/views/homeScreen/todoScreen.dart';
 import 'package:todoapp/src/app/views/onboarding/register/registerScreen.dart';
 import 'package:todoapp/src/app/widgets/regTitle.dart';
@@ -129,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => TodoScreen(
+                                    builder: (context) => HomePage(
                                           userId: user.uid,
                                         )));
                             // Navigate to the next screen or perform actions here

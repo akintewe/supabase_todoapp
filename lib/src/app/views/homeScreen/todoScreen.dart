@@ -27,12 +27,12 @@ class _TodoScreenState extends State<TodoScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        leadingWidth: 200,
+        leadingWidth: 300,
         backgroundColor: Colors.black,
         leading: Padding(
           padding: const EdgeInsets.only(left: 15.0),
           child: Text(
-            'Store Todo',
+            'Welcome to StoreTodo 😊',
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
@@ -47,9 +47,16 @@ class _TodoScreenState extends State<TodoScreen> {
             return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
-              child: Text(
-                'No items. Please create a new item.',
-                style: TextStyle(color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/checklist.png'),
+                  Text(
+                    'What do you want to do today?',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w700),
+                  ),
+                ],
               ),
             );
           } else {
