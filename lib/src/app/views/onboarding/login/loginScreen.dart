@@ -125,7 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (user != null) {
                             // Login successful, navigate to the next screen or perform necessary actions
                             print('User logged in successfully: ${user.email}');
-                          
 
                             Navigator.push(
                                 context,

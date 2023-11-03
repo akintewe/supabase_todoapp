@@ -38,6 +38,7 @@ class _TodoScreenState extends State<TodoScreen> {
           ),
         ),
       ),
+    
       body: StreamBuilder<List<Todo>>(
         stream: _todoDatabaseHelper.todosStream,
         builder: (context, snapshot) {
@@ -67,9 +68,20 @@ class _TodoScreenState extends State<TodoScreen> {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
+                    width: double.infinity,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.white)),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(130, 5, 255, 1),
+                          Color.fromRGBO(207, 161, 254, 1)
+                        ], // Specify your gradient colors here
+                        begin: Alignment
+                            .centerLeft, // Specify the alignment of the gradient
+                        end: Alignment
+                            .centerRight, // Specify the alignment of the gradient
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: ListTile(
                       title: Text(
                         todo.title,
@@ -138,132 +150,6 @@ class _TodoScreenState extends State<TodoScreen> {
             );
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromRGBO(136, 117, 255, 1),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: Colors.black,
-                title: Text(
-                  'Add new item...😊',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                content: Container(
-                  height: 270,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 220.0),
-                        child: Text(
-                          'Title',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: 'Make milk', // Set your hint text here
-                          hintStyle:
-                              TextStyle(color: Color.fromRGBO(83, 83, 83, 1)),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.black,
-                        ),
-                        controller: _titleController,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 190.0),
-                        child: Text(
-                          'Description',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText:
-                              'Finish the milk today...', // Set your hint text here
-                          hintStyle:
-                              TextStyle(color: Color.fromRGBO(83, 83, 83, 1)),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.black,
-                        ),
-                        controller: _descriptionController,
-                      ),
-                    ],
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Todo todo = Todo(
-                        id: widget.userId,
-                        title: _titleController.text,
-                        description: _descriptionController.text,
-                        isCompleted: false,
-                      );
-
-                      _todoDatabaseHelper.addTodo(todo, widget.userId);
-
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Add Todo'),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
